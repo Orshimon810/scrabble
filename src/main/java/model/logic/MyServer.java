@@ -1,10 +1,10 @@
 package model.logic;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import model.GameClientHandler;
+import model.GameState;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -67,11 +67,11 @@ public class MyServer extends Thread{
                                  System.out.println("too much clients!");
                                    aClient.close();
                                }
+
                 out = new PrintWriter(aClient.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(aClient.getInputStream()));
 
                 try {
-
                     ch.handleClient(aClient.getInputStream(), aClient.getOutputStream());
                     ch.close();
                     aClient.getInputStream().close();

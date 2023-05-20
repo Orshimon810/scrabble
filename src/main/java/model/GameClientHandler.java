@@ -3,45 +3,24 @@ package model;
 import model.logic.ClientHandler;
 
 import java.io.*;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameClientHandler implements ClientHandler{
+    public static List<GameClientHandler> handlerList = new ArrayList<>();
+    private ObjectOutputStream writer;
+    public static GameState gameStateInstance = GameState.getGameState();
 
 
-    public static List<GameClientHandler> handlerList= new ArrayList();
-    private String clientName;
-    PrintWriter out ;
-    BufferedReader in ;
-
-    public GameClientHandler() {
-            handlerList.add(this);
-    }
 
     @Override
-    public void handleClient(InputStream inFromclient, OutputStream outToClient) {
-        try {
-
-            out = new PrintWriter(
-                    outToClient, true);
-
-            in = new BufferedReader(
-                    new InputStreamReader(
-                            inFromclient));
-
-
-            String line;
-            while ((line = in.readLine()) != null) {
-
-                // writing the received message from
-                // client
-                System.out.printf(
-                        " Sent from client: " /*+ clientName */+ " " + line + "\n");
-                out.println(line);
-            }
-        }catch (IOException e)
-        {
+    public void handleClient(InputStream inFromClient, OutputStream outToClient) {
+        try{
+            handlerList.add(this);
+            writer = new ObjectOutputStream(outToClient);
+            broadcastMessage();
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -49,12 +28,21 @@ public class GameClientHandler implements ClientHandler{
     @Override
     public void close() {
         try {
-            in.close();
-            out.close();
-
+            writer.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+    }
 
+    public void broadcastMessage() {
+        for(GameClientHandler guestPlayer : handlerList){
+            try{
+                    guestPlayer.writer.writeObject(gameStateInstance);
+                    guestPlayer.writer.flush();
+
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
+        }
     }
 }

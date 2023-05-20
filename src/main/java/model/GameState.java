@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public  class GameState {
+    //Attributes
     int curPlayerInd = 0;
     Tile.Bag gameCash;
     List<Player> playersList;
     Board board;
     boolean isGameOver;
+
     private static GameState gameStateInstance = null;
 
     //CTOR
@@ -25,6 +27,10 @@ public  class GameState {
     //Getters
     public Tile.Bag getGameCash() {
         return gameCash;
+    }
+
+    public int getCurPlayerInd() {
+        return curPlayerInd;
     }
 
     public List<Player> getPlayersList() {

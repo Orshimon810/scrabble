@@ -38,7 +38,7 @@ public class Player {
             System.out.println("Tiles are over");
             return tmpMoveScore;
         }
-        // if the player dont have all the tiles for word
+        // if the player don't have all the tiles for word
         else if(!isContainTilesForWord(w)){
             System.out.println("Not all word tiles are existed");
             return tmpMoveScore;
@@ -83,16 +83,6 @@ public class Player {
     }
 
 
-//    //get specific tile by index
-//    public Tile getAndRemoveFromPack(int tileInd)
-//    {
-//        Tile temp = pack.get(tileInd);
-//        pack.set(tileInd,null);
-//        return temp;
-//    }
-
-
-
     //Getters
     public boolean packIsFull()
     {
@@ -109,12 +99,13 @@ public class Player {
         return this.pack;
     }
 
+    public int getId() {return id;}
+
     public String getQuery()
     {
         return query;
     }
 
-    public int getId() {return id;}
 
     public void setQuery(String q)
     {

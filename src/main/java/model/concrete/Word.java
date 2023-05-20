@@ -40,4 +40,13 @@ public class Word {
     public boolean isVertical() {
         return vertical;
     }
+
+    public String DisplayWord(){
+        StringBuilder sb= new StringBuilder();
+        for (Tile tile : tiles) {
+            sb.append(tile.letter);
+        }
+        return sb.toString();
+    }
+
 }

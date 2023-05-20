@@ -1,19 +1,18 @@
 package model;
 
-import model.logic.MyServer;
+import model.concrete.Word;
 
 public interface ScrabbleFacade {
-
-
     void hostGame(int port);
 
-    void joinGame(String ip, int port );
+
+    void joinGame(String ip, int port);
 
 
+    void disconnect(Player to_disconnected);
 
-    void addPlayer(Player player);
 
-    void disconnect();
+    boolean move(Word w);
 
 
 }

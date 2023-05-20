@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import model.GameClient;
+import model.GuestPlayer;
 import model.GameServer;
 import view_model.ViewModel;
 

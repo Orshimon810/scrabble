@@ -6,32 +6,30 @@ import model.logic.MyServer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class HostPlayer extends  Player{
+public class HostPlayer extends Player{
+    private MyServer queryServer;
+    private MyServer gameServer;
+    private int port = 9997;
 
-    public  MyServer queryServer;
-    public int port = 9997;
 
     public HostPlayer() {
         queryServer = new MyServer(port,new BookScrabbleHandler());
+        gameServer = new MyServer(port,new GameClientHandler());
     }
 
-    // there is dictionaryLegal method from patam1 , return always True.
-    public boolean tmpDictionaryLegal(String query ){
-        //TODO: with given word we will open new thread to dictionaryServer
-        //TODO: check with dm if the word is legal , return true or false
-        //TODO: closing the tread, this method will run each time a player want to make move
+
+    public boolean dictLegal(String query ){
         queryServer.start();
         // [*] get input(tiles) from client(button's gui?) make it to a string so we can
         // send it as a query to the BookScrabbleHandler
         // [*] put tests here like eli did in mainTrain -> testBSCH
-
         try {
             DictionaryManager dm = DictionaryManager.get();
             dm.query("TOKEN");
-            
             Socket server = new Socket("localhost", port);
             PrintWriter out = new PrintWriter(server.getOutputStream());
             Scanner in = new Scanner(server.getInputStream());
@@ -50,9 +48,20 @@ public class HostPlayer extends  Player{
 
         }
         queryServer.close();
-
         return true;
     }
+    public MyServer getGameServer() {
+        return gameServer;
+    }
+    public MyServer getQueryServer() {
+        return queryServer;
+    }
 
+
+    //Method which close all the connection that the host have
+    public void closeConnection(){
+      queryServer.close();
+      gameServer.close();
+    }
 
 }
