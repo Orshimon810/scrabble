@@ -1,8 +1,7 @@
 package model.logic;
 
 
-import model.GameClientHandler;
-import model.GameState;
+import model.sendQueryHandler;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -22,7 +21,6 @@ public class MyServer extends Thread{
     public MyServer(int port, ClientHandler ch) {
         this.port = port;
         this.ch = ch;
-
     }
 
     @Override
@@ -93,6 +91,11 @@ public class MyServer extends Thread{
     public void close()
     {
         stop = true;
+    }
+
+    public static void main(String[] args){
+        MyServer server = new MyServer(1234,new sendQueryHandler());
+        server.start();
     }
 
 }

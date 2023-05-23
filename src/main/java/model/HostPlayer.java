@@ -18,7 +18,7 @@ public class HostPlayer extends Player{
 
     public HostPlayer() {
         queryServer = new MyServer(port,new BookScrabbleHandler());
-        gameServer = new MyServer(port,new GameClientHandler());
+        gameServer = new MyServer(port,new sendQueryHandler());
     }
 
 
